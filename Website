@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html>
+<style>
+.box{
+height:50px;
+width:50px;
+background-color:grey;
+border-radius:25px;
+}
+</style>
 <head>
 <title> Ferrois Web </title>
 <p> This is my website (Ferr)</p>
+<div class="box"></div>
 </head>
 <body>
 </body>
