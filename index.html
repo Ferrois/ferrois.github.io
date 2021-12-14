@@ -47,7 +47,67 @@
 	transform:translateX(145%);
 	background-color:green;
 	}
+.calculator{
+width:300px;
+height:500px;
+background-color:#404040;
+border-radius:20px;
+position:relative;
+}
+.display{
+width:250px;
+height:100px;
+background-color:rgba(0,50,100,0.2);
+position:relative;
+top:25px;
+left:25px;
+}
+.container{
+display:grid;
+grid-template-columns:60px 60px 60px;
+grid-template-rows: repeat(4,50px);
+position:absolute;
+top:175px;
+}
+.container2{
+display:grid;
+grid-template-columns:120px 120px;
+grid-template-rows:repeat(1,50px);
+position:absolute;
+top:125px;
+}
+.container3{
+display:grid;
+grid-template-columns: 60px;
+grid-template-rows:repeat(4,50px);
+position:absolute;
+top:175px;
+left:180px;
+}
+.number{
+border-radius:1px;
+background-color:gray;
 
+}
+.number:hover{
+background-color: rgba(100,100,100,1);
+}
+.func{
+border-radius:1px;
+background-color:gray;
+
+}
+.func:hover{
+background-color: rgba(100,100,100,1);
+}
+.operation{
+border-radius:1px;
+background-color:gray;
+
+}
+.operation:hover{
+background-color: rgba(100,100,100,1);
+}
 
 	</style>
 
@@ -68,11 +128,41 @@
 <div class="slider">
 
 </div>
+</div>
+
 
 </head>
 
 <body>
 
+<div class="calculator">
+	<div class="display">
+	<div class="container3">
+		<button value="+" type="button" class="operation">+
+ 		<button value="-" type="button" class="operation">-
+		<button value="*" type="button" class="operation">×
+		<button value="÷" type="button" class="operation">÷
+	</div>
+	<div class="container2">
+		<button value="AC" type="button" class="func">AC
+		<button value="Del" type="button" class="func">Del
+	</div>
+<div class="container">
+		<button value="1" type="button" class="number">1
+		<button value="2" type="button" class="number">2
+		<button value="3" type="button" class="number">3
+		<button value="4" type="button" class="number">4
+		<button value="5" type="button" class="number">5
+		<button value="6" type="button" class="number">6
+		<button value="7" type="button" class="number">7
+		<button value="8" type="button" class="number">8
+		<button value="9" type="button" class="number">9
+		<button value="0" type="button" class="number">0
+		<button value="." type="button" class="number">.
+ 		<button value="=" type="button" class="number">=
+	</div>
+	</div>
+</div>
 
 </body>
 
