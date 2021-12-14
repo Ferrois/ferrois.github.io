@@ -48,20 +48,23 @@
 	background-color:green;
 	}
 .calculator{
-width:300px;
-height:500px;
+width:295px;
+height:440px;
 background-color:#404040;
 border-radius:20px;
 position:relative;
-top:100px;
+box-shadow: 2px 2px 2px;
 }
 .display{
-width:250px;
+width:240px;
 height:100px;
 background-color:rgba(0,50,100,0.2);
 position:relative;
 top:25px;
 left:25px;
+border-style:solid;
+border-width:3px;
+border-color:black;
 }
 .container{
 display:grid;
@@ -109,12 +112,15 @@ background-color:gray;
 .operation:hover{
 background-color: rgba(100,100,100,1);
 }
+.screennum {
+background-color:transparent;
+}
 
 	</style>
 
 	<head>
     
-  <h1> Ferrois' Website HTML</h1>
+  <h1> Ferrois' Website HTML/CSS/Javascript Testing</h1>
 
 <input type="number" class="int1" name="int1" id="i1">
 
@@ -138,29 +144,30 @@ background-color: rgba(100,100,100,1);
 
 <div class="calculator">
 	<div class="display">
+		<p class="screenNum" id="output" ></p>
 	<div class="container3">
-		<button value="+" type="button" class="operation">+
- 		<button value="-" type="button" class="operation">-
-		<button value="*" type="button" class="operation">×
-		<button value="÷" type="button" class="operation">÷
+		<button value="+" type="button" class="operation" onclick="appendnum('+')">+
+ 		<button value="-" type="button" class="operation" onclick="appendnum('-')">-
+		<button value="*" type="button" class="operation" onclick="appendnum('*')">×
+		<button value="÷" type="button" class="operation" onclick="appendnum('/')">÷
 	</div>
 	<div class="container2">
-		<button value="AC" type="button" class="func">AC
-		<button value="Del" type="button" class="func">Del
+		<button value="AC" type="button" class="func" onclick="clearxx()">AC
+		<button value="Del" type="button" class="func" onclick="deletexx()">DEL
 	</div>
 <div class="container">
-		<button value="1" type="button" class="number">1
-		<button value="2" type="button" class="number">2
-		<button value="3" type="button" class="number">3
-		<button value="4" type="button" class="number">4
-		<button value="5" type="button" class="number">5
-		<button value="6" type="button" class="number">6
-		<button value="7" type="button" class="number">7
-		<button value="8" type="button" class="number">8
-		<button value="9" type="button" class="number">9
-		<button value="0" type="button" class="number">0
-		<button value="." type="button" class="number">.
- 		<button value="=" type="button" class="number">=
+		<button value="1" type="button" class="number" onclick="appendnum(1)">1</button>
+		<button value="2" type="button" class="number" onclick="appendnum(2)">2
+		<button value="3" type="button" class="number" onclick="appendnum(3)">3
+		<button value="4" type="button" class="number" onclick="appendnum(4)">4
+		<button value="5" type="button" class="number" onclick="appendnum(5)">5
+		<button value="6" type="button" class="number" onclick="appendnum(6)">6
+		<button value="7" type="button" class="number" onclick="appendnum(7)">7
+		<button value="8" type="button" class="number" onclick="appendnum(8)">8
+		<button value="9" type="button" class="number" onclick="appendnum(9)">9
+		<button value="0" type="button" class="number" onclick="appendnum(0)">0
+		<button value="." type="button" class="number" onclick="appendnum('.')">.
+ 		<button value="=" type="button" class="number" onclick="calculateEval()">=
 	</div>
 	</div>
 </div>
@@ -177,6 +184,36 @@ var integer2  = document.getElementById("i2").value;
 
 return parseInt(integer2) + parseInt(integer1);
 
+}
+
+let displayNumber = document.getElementById("output");
+
+
+function appendnum(numb){
+	if (numb == "." && displayNumber.innerHTML.indexOf(".") > -1){
+	return;
+	}
+/*	if (operatorsPresent(displayNumber.innerHTML) && operatorEnquire(numb)){
+	return;
+	}*/
+	{
+	displayNumber.innerHTML += numb;
+	}
+	}
+
+function clearxx(){
+	displayNumber.innerHTML = "";
+	}
+function calculateEval(){
+	try{
+	displayNumber.innerHTML=eval(displayNumber.innerHTML);
+	}
+	catch(err){
+	alert("Not calculatable")
+	}
+	}
+function deletexx(){
+	displayNumber.innerHTML = displayNumber.innerHTML.slice(0,-1);
 }
 
 	</script>
