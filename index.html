@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+<style>
+body{
+	font-family:Lato,san-serif;
+}
+
+/*Grid*/
+.container{
+	display:grid;
+	grid-template-columns:1fr;
+	grid-template-rows:60px 1fr 1fr 1fr 70px;
+	grid-template-areas:
+	"nav"
+	"content-wrapper-one"
+	"content-wrapper-two"
+	"content-wrapper-three"
+	"footer";
+	height:140vh;
+	position:relative;
+	top:0;
+	left:0;
+	margin:-8px;
+}
+
+/*Navigation Bar*/
+.navigation-bar{
+	grid-area:nav;
+	background-color:rgb(245,245,245);
+	display:flex;
+	flex-direction:right;
+	justify-content:space-between;
+	padding:20px;
+	border-bottom:1px solid gray;
+}
+
+.left-side{
+	display:flex;
+	flex-direction:right;
+}
+
+.left-side > .nav-button {
+	text-decoration:none;
+	color:gray;
+	transition:0.5s;
+	margin:5px;
+}
+
+.left-side > .nav-button:hover {
+	color:black;
+	text-decoration:underline;
+	font-size:17px;
+}
+
+#selected-button{
+	color:black;
+	text-decoration:underline;
+	font-size:17px;
+}
+
+/*Content*/
+
+.content-wrapper-one{
+	grid-area:content-wrapper-one;
+	background-color:skyblue;
+	position:relative;
+}
+
+.content-wrapper-one > .main-image{
+	height:100%;
+	width:100%;
+	position:absolute;
+}
+
+.content-wrapper-one > .darken-layer{
+	height:100%;
+	width:100%;
+	background-color:rgba(0,0,0,0.2);
+	transition:0.8s;
+	position:absolute;
+	display:table;
+}
+
+
+.main-text{
+	color:white;
+	/*height:100%;
+	width:100%;*/
+	text-align:center;
+	top:0%;
+	position:relative;
+	font-size:50px;
+	transition:1s;
+}
+
+.sub-text{
+	color:transparent;
+	text-align:center;
+	font-size:15px;
+	transition:1s;
+}
+
+
+.darken-layer:hover > .main-text{
+	font-size:55px;
+	color:white;
+}
+
+.darken-layer:hover > .sub-text{
+	font-size:16px;
+	color:white;
+}
+
+
+.content-wrapper-two{
+	grid-area:content-wrapper-two;
+	background-color:cyan;
+	position:relative;
+}
+
+.content-wrapper-two > .main-image{
+	height:100%;
+	width:100%;
+	position:absolute;
+}
+
+.content-wrapper-two > .darken-layer{
+	height:100%;
+	width:100%;
+	background-color:rgba(0,0,0,0.2);
+	transition:0.8s;
+	position:absolute;
+	display:table;
+}
+
+.content-wrapper-three{
+	grid-area:content-wrapper-three;
+	background-color:fuchsia;
+	position:relative;
+}
+
+.content-wrapper-three > .main-image{
+	height:100%;
+	width:100%;
+	position:absolute;
+}
+
+.content-wrapper-three > .darken-layer{
+	height:100%;
+	width:100%;
+	background-color:rgba(0,0,0,0.2);
+	transition:0.8s;
+	position:absolute;
+	display:table;
+}
+
+
+
+.darken-layer:hover{
+	background-color:rgba(0,0,0,0.5);
+}
+
+
+/*Footer*/
+
+.footing{
+	grid-area:footer;
+	background-color:rgba(30,30,30,1);
+	border-top:1px gray solid;
+}
+
+.footing-text{
+	color:rgb(200,200,200);
+	font-size:15px;
+	text-align:center;
+}
+
+</style>
+<head>
+<title>Ferrois' homepage</title>
+</head>
+<body>
+	<div class="container">
+		<div class="navigation-bar">
+			<div class="left-side">
+				<div href="FerroisWebpage.html" class="nav-button" id="selected-button">HOME
+				</div>
+				<a href="Ferrois.html" class="nav-button">ABOUT
+				</a>
+			</div>
+			<div class="right-side">
+				<div class="name" style="font-size:20px;
+				border:1px black solid;
+				padding:4px;
+				position:relative;
+				bottom:5px;">FERROIS
+				</div>
+			</div>
+		</div>
+		<div class="content-wrapper-one">
+			<img src="Images/chess.jpg" alt="" class="main-image">
+			<div class="darken-layer">
+				<p class="main-text">
+					Chess
+				</p>
+				<p class="sub-text">
+					Intermediate level in Chess <br>
+					1800 Lichess elo, 1600 Chess.com elo
+				</p>
+			</div>
+		</div>
+		<div class="content-wrapper-two">
+			<img src="Images/coding.jpg" alt="" class="main-image">
+			<div class="darken-layer">
+				<p class="main-text">
+					Projects
+				</p>
+				<p class="sub-text">
+					HTML/CSS/JS And Python <br>
+					Coding projects by Ferrois
+				</p>
+			</div>
+		</div>
+		<div class="content-wrapper-three">
+			<img src="Images/jobs.jpg" alt="" class="main-image">
+			<div class="darken-layer">
+				<p class="main-text">
+					Jobs
+				</p>
+				<p class="sub-text">
+					Ferrois' Job Experiences <br>
+					Click here to find out more
+				</p>
+			</div>
+		</div>
+		<div class="footing">
+			<p class="footing-text">
+				This website was created by Ferrois on <br>
+				17th December 2021
+			</p>
+		</div>
+	</div>
+	
+</body>
+</html>
