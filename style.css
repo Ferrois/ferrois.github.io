@@ -16,7 +16,7 @@ body{
 	"content-wrapper-two"
 	"content-wrapper-three"
 	"footer";
-	height:140vh;
+	height:250vw;
 	position:relative;
 	top:0;
 	left:0;
@@ -417,20 +417,17 @@ body{
 
 /* Responsive grid layout */
 
-/*@media all and (orientation: landscape){
+@media all and (orientation:landscape){
 	.container{
 		display:grid;
 		grid-template-columns:1fr 1fr 1fr;
-		grid-template-rows:0.13fr 1fr 60px;
+		grid-template-rows:60px 1fr 60px;
 		grid-template-areas:
 		"nav nav nav"
 		"content-wrapper-one content-wrapper-two content-wrapper-three"
 		"footer footer footer"
 		;
-                height:100vh
-	}
-	.main-text{
-		font-size:50px;
+                height:70vw
 	}
 	
-}*/
+}
