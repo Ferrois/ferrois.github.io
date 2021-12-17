@@ -9,7 +9,7 @@ body{
 .container{
 	display:grid;
 	grid-template-columns:1fr;
-	grid-template-rows:0.2fr 1fr 1fr 1fr 70px;
+	grid-template-rows:75px 1fr 1fr 1fr 70px;
 	grid-template-areas:
 	"nav"
 	"content-wrapper-one"
