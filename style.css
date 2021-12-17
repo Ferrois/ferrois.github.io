@@ -417,7 +417,7 @@ body{
 
 /* Responsive grid layout */
 
-@media all and (orientation: landscape){
+/*@media all and (orientation: landscape){
 	.container{
 		display:grid;
 		grid-template-columns:1fr 1fr 1fr;
@@ -433,4 +433,4 @@ body{
 		font-size:50px;
 	}
 	
-}
+}*/
