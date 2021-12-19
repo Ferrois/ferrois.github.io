@@ -737,9 +737,9 @@ body{
 
 /*Responsive Home Page SlideBar*/
 
-@media all and (max-height:500px){
+@media all and (max-height:350px){
 	.navigation-slider.isCurrentlyActive{
-		width:300px;
+		width:250px;
 	}
 	.navigation-text,.navigation-text-selected{
 		transform:translateX(100px) translateY(-10px);
