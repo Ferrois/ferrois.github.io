@@ -1,169 +1,384 @@
 <!DOCTYPE html>
-<html>
-	<link rel="stylesheet" href="style.css">
-	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-<style>
-</style>
+<html lang="en">
 <head>
-	<meta name="google-site-verification" content="ObTk37WAtMGXr0vwPq62XlQc87WCsgpc3apvVWJ8ULU" />
-<title>Ferrois' homepage</title>
+	<script src="https://kit.fontawesome.com/ae5fff5f87.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/index.css">
+  <script type="module" defer>
+  	///////////////////////////////////////////////////////////////////////////////////
+	// TODO: Add SDKs for Firebase products that you want to use
+	// https://firebase.google.com/docs/web/setup#available-libraries
+	// Your web app's Firebase configuration
+	// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+	import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+	import { getDatabase, set, ref, push, child, get} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+
+	const firebaseConfig = {
+		apiKey: "AIzaSyBUvKHCJKAjQdywhtKHM2bL9MAj7f6rOXw",
+		authDomain: "ferrois-project.firebaseapp.com",
+		databaseURL: "https://ferrois-project-default-rtdb.asia-southeast1.firebasedatabase.app",
+		projectId: "ferrois-project",
+		storageBucket: "ferrois-project.appspot.com",
+		messagingSenderId: "238913088786",
+		appId: "1:238913088786:web:3667527b33fc457d2997cb",
+		measurementId: "G-N6ZV5Y740J"
+	};
+		
+		// Initialize Firebase
+		const firebase = initializeApp(firebaseConfig);
+		const analytics = getAnalytics(firebase);
+		const database = getDatabase(firebase);
+	
+	// startScreen
+	var usernameId = null;
+	var submitName = document.querySelector(".submitName");
+	var typeName = document.querySelector(".typeName")
+	submitName.addEventListener("click",()=>{
+		if (typeName.value.length < 3 || typeName.value.length > 12){
+			alert("Please pick a name from 3 to 12 characters")
+			typeName.value = "";
+		}else{
+			usernameId = typeName.value;
+			document.querySelector(".startScreen").classList.add("startScreenOver");
+		}
+	});
+		
+	//Chat system
+	var chatIcon = document.querySelector(".chatIcon");
+	var chatSlider = document.querySelector(".chatSlider");
+	var typeText = document.querySelector(".typeText");
+	var sendText = document.querySelector(".sendText");
+	var chatSliderActiveIndex = false;
+	
+	function renderMessage(name,message){
+		if (name == usernameId){
+			var chatbox_wrapper = document.createElement("div");
+			chatbox_wrapper.classList.add("myChatBoxWrapper");
+		}else{
+			var chatbox_wrapper = document.createElement("div");
+			chatbox_wrapper.classList.add("ChatBoxWrapper");
+		}
+		chatbox_wrapper.innerHTML = `<p class="myChatBox"> ${name}: <br/> ${message} </p>`;
+		document.querySelector(".chattingWrapper").appendChild(chatbox_wrapper);
+	}
+	
+	var newCount = 0;
+	var chatMsg,chatName
+	
+	get(ref(database,"messages/count")).then((snapshot)=>{
+		newCount = snapshot.val();
+		oldCount = snapshot.val()
+	});
+	
+	function checkMessages(){
+		get(ref(database,"messages/count")).then((snapshot)=>{
+			newCount = snapshot.val();
+		});
+		if (newCount > oldCount){
+			oldCount = newCount;
+			console.log(newCount);
+			console.log(oldCount);
+			get(ref(database,`messages/${newCount}`)).then((snapshots)=>{
+				chatMsg = snapshots.val().message;
+				chatName = snapshots.val().name;
+				renderMessage(chatName,chatMsg);
+			})
+			get(ref(database,"messages/count")).then((snapshot)=>{
+				oldCount = snapshot.val();
+			});
+		}else{
+			
+		}
+	};
+	
+	
+	var messageCount =0;
+	
+	function initiateChat(){
+		console.log(messageCount)
+		for (let i = 1; i < (messageCount+1) ;i++){
+			console.log(i);
+			get(ref(database,`messages/${i}`)).then((snapshot)=>{
+					chatMsg = snapshot.val().message;
+					chatName = snapshot.val().name;
+					renderMessage(chatName,chatMsg);
+			});
+		}
+	}
+	
+	chatIcon.addEventListener("click",()=>{
+		if (chatSliderActiveIndex != true){
+			chatSliderActiveIndex = true;
+			chatSlider.classList.remove("isHidden");
+			chatSlider.classList.add("isActive");
+		}else{
+			chatSliderActiveIndex = false;
+			chatSlider.classList.remove("isActive");
+			chatSlider.classList.add("isHidden");
+		}
+	});
+	
+	function updateMessageCount(){
+		get(ref(database,"/messages/count")).then((snapshot)=>{
+			messageCount = snapshot.val();
+			if (messageCount == null){
+				messageCount = 0;
+			}
+		});
+	}
+	function sendMessage(){
+		var message = typeText.value;
+		if (message != ""){
+			set(ref(database, "/messages" + `/${messageCount+1}`),{
+				"name" : usernameId,
+				"message" : message,
+		//		"messageCount" : messageCount
+			});
+			document.querySelector(".typeText").value = "";
+			set(ref(database, "/messages/count"),messageCount+1);
+			
+			//renderMessage(usernameId,message);
+		}
+		//renderMessage(usernameId,message);
+	}
+	sendText.addEventListener("click",sendMessage);
+	
+	setTimeout(initiateChat,3000);
+	
+	
+	//Game
+	
+	var canvas = document.querySelector(".canvas");
+	var ctx = canvas.getContext("2d");
+	
+	canvas.width = 0.7 * innerWidth;
+	canvas.height = 1.2 * innerWidth;
+	
+	const joystick_big = document.querySelector(".joystickBig");
+	const joystick_small = document.querySelector(".joystickSmall");
+	
+	var isJoystickActivated = false;
+	
+	var joystickPos = {
+		x : 0,
+		y : 0
+	};
+	
+	var joystickOffset = joystick_big.getBoundingClientRect();
+	var originalJoystickPos = {
+		x :joystickOffset.width/2 - joystick_small.getBoundingClientRect().width/2 + joystickOffset.left,
+		y :joystickOffset.height/2 - joystick_small.getBoundingClientRect().height/2 + joystickOffset.top
+	};
+	
+		var trueJoystickPos = {
+			x :  originalJoystickPos.x + joystickPos.x,
+			y :  originalJoystickPos.y + joystickPos.y
+		};
+	
+	function distChecker(){
+		var distJoystick = Math.sqrt(Math.pow((clientMouseX - originalJoystickPos.x),2) + Math.pow((clientMouseY - originalJoystickPos.y),2));
+	}
+	function refreshPage(){
+		ctx.rect(0,0,canvas.width,canvas.height)
+		ctx.fillStyle = "rgba(55,55,55,1)";
+		ctx.fill()
+	}
+	//Page Ticker
+	function ticker(){
+		requestAnimationFrame(ticker);
+		refreshPage();
+		//Joystick Controls
+		trueJoystickPos.x = originalJoystickPos.x + joystickPos.x,
+		trueJoystickPos.y = originalJoystickPos.y + joystickPos.y
+		joystick_small.style.top = trueJoystickPos.y+"px";
+		joystick_small.style.left = trueJoystickPos.x+"px";
+		try{
+			mainPlayer.updateJoystick();
+		}catch(err){
+		}
+		//Paddle Controls
+		try{
+			mainPaddle.control();
+		}catch(err){
+		}
+		//Ball control
+		try{
+			ball.update();
+		}catch(err){
+		}
+		
+	};
+	ticker();
+	
+	setInterval(()=>{
+		updateMessageCount();
+		checkMessages();
+	},1000)
+	
+	var oldCount = messageCount; ///////
+	
+	window.ontouchstart = e => {
+		var distJoystick = Math.hypot((e.touches[0].clientX - (originalJoystickPos.x + joystick_small.getBoundingClientRect().width/2)),(e.touches[0].clientY - (originalJoystickPos.y + joystick_small.getBoundingClientRect().height/2)))
+		if (distJoystick < joystickOffset.width/2){
+			isJoystickActivated = true;
+			joystickPos.x = e.touches[0].clientX - ( joystickOffset.left + joystickOffset.width/2 );//- joystick_small.getBoundingClientRect().width);
+			joystickPos.y = e.touches[0].clientY - ( joystickOffset.top + joystickOffset.height/2 );
+		}
+	}
+	
+	window.ontouchmove = e => {
+	//	joystickPos.x = e.touches[0].clientX - ( joystickOffset.left + joystickOffset.width/2 );//- joystick_small.getBoundingClientRect().width);
+	//	joystickPos.y = e.touches[0].clientY - ( joystickOffset.top + joystickOffset.height/2 );
+		if (isJoystickActivated == true){
+			var distJoystick = Math.hypot((e.touches[0].clientX - (originalJoystickPos.x + joystick_small.getBoundingClientRect().width/2)),(e.touches[0].clientY - (originalJoystickPos.y + joystick_small.getBoundingClientRect().height/2)));
+			if (distJoystick < joystickOffset.width/2){
+			joystickPos.x = e.touches[0].clientX - ( joystickOffset.left + joystickOffset.width/2 );//- joystick_small.getBoundingClientRect().width);
+			joystickPos.y = e.touches[0].clientY - ( joystickOffset.top + joystickOffset.height/2 );
+			}else{
+				let ratioDist = distJoystick / (joystickOffset.width/2);
+				joystickPos.x = (e.touches[0].clientX - ( joystickOffset.left + joystickOffset.width/2 ))/ratioDist;
+				joystickPos.y = (e.touches[0].clientY - ( joystickOffset.top + joystickOffset.height/2 ))/ratioDist;
+		
+			}
+			//console.log(distJoystick)
+		}
+	}
+	window.ontouchend = e =>{
+		isJoystickActivated = false;
+		joystickPos = {
+			x : 0,
+			y : 0
+		}
+	}
+	var gridsInX = 140;
+	var gridsInY = gridsInX * (canvas.height/canvas.width); //240
+	var _grid = canvas.width / gridsInX;
+	
+	class Paddle{
+		constructor(x1,x2,y1,y2,color,speed){
+			this.x1 = x1 * _grid;
+			this.x2 = x2 * _grid;
+			this.y1 = y1 * _grid;
+			this.y2 = y2 * _grid;
+			this.color = color;
+			this.paddleSpeed = speed;
+		}
+		draw(){
+			ctx.beginPath();
+			ctx.rect(this.x1,this.y1,this.x2-this.x1,this.y2-this.y1);
+			ctx.fillStyle = this.color;
+			ctx.fill()
+		}
+		control(){
+			if (joystickPos.x > 0 && this.x2 < gridsInX * _grid){
+				this.x1 += 1 * this.paddleSpeed;
+				this.x2 += 1 * this.paddleSpeed;
+			}
+			else if (joystickPos.x < 0 && this.x1 > 0){
+				this.x1 += -1 * this.paddleSpeed;
+				this.x2 += -1 * this.paddleSpeed;
+			}else{
+				
+			}
+			this.draw();
+		}
+	}
+	var mainPaddle = new Paddle(60,80,225,230,"white",4);
+	var enemyPaddle = new Paddle(60,80,10,15,"white",1.5);
+	
+	class Ball{
+		constructor(x1,x2,y1,y2,velocity_x,velocity_y,speed){
+			this.x1 = x1 * _grid;
+			this.x2 = x2 * _grid;
+			this.y1 = y1 * _grid;
+			this.y2 = y2 * _grid;
+			this.velocity_x = velocity_x * _grid;
+			this.velocity_y = velocity_y * _grid;
+			this.speed = speed;
+		}
+		//triggerBounce(){
+			
+	//	}
+	//	triggerBounceWall(){
+			
+	//	}
+		draw(){
+			ctx.beginPath();
+			ctx.rect(this.x1,this.y1,this.x2-this.x1,this.y2-this.y1);
+			ctx.fillStyle = "white";
+			ctx.fill();
+		}
+		update(){
+			this.testCollision()
+			this.x1 += this.velocity_x * this.speed;
+			this.x2 += this.velocity_x * this.speed;
+			this.y1 += this.velocity_y * this.speed;
+			this.y2 += this.velocity_y * this.speed;
+			this.draw();
+		}
+		testCollision(){
+			if (this.y2 > mainPaddle.y1 && this.y1 < mainPaddle.y2 && this.x2 > mainPaddle.x1 && this.x1 < mainPaddle.x2){
+				if (this.velocity_y >= 0){
+				this.velocity_y *= -1;
+				}
+			} //right wall
+			else if (this.x2 > gridsInX*_grid && this.velocity_x > 0){
+				this.velocity_x *= -1;
+			}
+			else if (this.x1 < 0 && this.velocity_x < 0){
+				this.velocity_x *= -1;
+			}
+			else if (this.y2 > gridsInY*_grid || this.y1 < 0){
+				this.velocity_y *= -1;
+				
+			}
+		}
+		
+	}
+	
+	var ball = new Ball(70,75,120,125,1,1,2.2)
+  </script>
+  <title>pongGame</title>
 </head>
 <body>
-	<div class="navigation-slider">
-		<div class="navigation-overlay">
-			<ul>
-				<li class="navigation-text-selected">
-					<div href="index.html"> 
-						Home
-					</div>
-					<div class="navigation-selector">
-					</div>
-				</li>
-				<li class="navigation-text">
-					<a href="ferrois-chess.html">
-						Chess
-					</a>
-					<div class="navigation-selector">
-					</div>
-				</li>
-				<li class="navigation-text">
-					<a href="ferrois-projects.html">
-						Projects
-					</a>
-					<div class="navigation-selector">
-					</div>
-				</li>
-				<li class="navigation-text">
-					<a href="ferrois-jobs.html">
-						Jobs
-					</a>
-					<div class="navigation-selector">
-					</div>
-				</li>
-				<li class="navigation-text">
-					<a href="ferrois-chess.html">
-						4
-					</a>
-					<div class="navigation-selector">
-					</div>
-				</li>
-				<li class="navigation-text">
-					<a href="ferrois-chess.html">
-						5
-					</a>
-					<div class="navigation-selector">
-					</div>
-				</li>
-				<li class="navigation-text">
-					<a href="ferrois-chess.html">
-						6
-					</a>
-					<div class="navigation-selector">
-					</div>
-				</li>
-			</ul>
+	<div class="container">
+		<div class="panel">
+			<b>Playing Against Ferrois</b>
+		</div>
+		<canvas class="canvas"></canvas>
+		<div class="joystickBig">
+		</div>
+		<div class="joystickSmall">
 		</div>
 	</div>
-	<div class="container">
-		<div class="navigation-bar">
-			<div class="left-side">
-				<div class="navigation-icon nav-button">
-					<div class="navigation-button">
-					</div>
-				</div>
-				<div href="FerroisWebpage.html" class="nav-button" id="selected-button">HOME
-				</div>
-				<a href="ferrois-about.html" class="nav-button">ABOUT
-				</a>
-			</div>
-			<div class="right-side">
-				<div class="name" style="font-size:20px;
-				border:1px black solid;
-				padding:4px;
-				position:relative;
-				bottom:5px;">FERROIS
-				</div>
-			</div>
+	<div class="chatSlider isHidden">
+		<div class="chattingWrapper">
+			<!--<div class="myChatBoxWrapper">
+					<p class="myChatBox"> Name: <br/>
+						test tes testes testes how u do now pensi</p>
+			</div>>-->
 		</div>
-		<div class="content-wrapper-one">
-			<img src="chess.jpg" alt="" class="main-image">
-			<a class="darken-layer" href="ferrois-chess.html">
-				<p class="main-text">
-					Chess
-				</p>
-				<p class="sub-text">
-					Intermediate level in Chess <br>
-					1800 Lichess elo, 1600 Chess.com elo
-				</p>
-			</a>
+		<div class="inputWrapper">
+			<input type="text" class="typeText" placeholder="Type Message Here"></input>
+			<div class="sendText">Send</div>
 		</div>
-		<div class="content-wrapper-two">
-			<img src="coding.jpg" alt="" class="main-image">
-			<div class="darken-layer">
-				<p class="main-text">
-					Projects
-				</p>
-				<p class="sub-text">
-					HTML/CSS/JS And Python <br>
-					Coding projects by Ferrois
-				</p>
-			</div>
+	</div>
+	<div class="chatIcon">
+		<i class="far fa-comment-dots fa-2x"></i>
+	</div>
+	<div class="startScreen">
+		<input class="typeName" type="text" placeholder="Input Your Name">
+		</input>
+		<div class="submitName">
+			<i class="fas fa-table-tennis fa-2x"></i>
 		</div>
-		<div class="content-wrapper-three">
-			<img src="jobs.jpg" alt="" class="main-image">
-			<div class="darken-layer">
-				<p class="main-text">
-					Jobs
-				</p>
-				<p class="sub-text">
-					Ferrois' Job Experiences <br>
-					Click here to find out more
-				</p>
-			</div>
-		</div>
-		<div class="content-wrapper-four">
-			<img src="jobs.jpg" alt="" class="main-image">
-			<div class="darken-layer">
-				<p class="main-text">
-					4
-				</p>
-				<p class="sub-text">
-					Ferrois' Job Experiences <br>
-					Click here to find out more
-				</p>
-			</div>
-		</div>
-		<div class="content-wrapper-five">
-			<img src="jobs.jpg" alt="" class="main-image">
-			<div class="darken-layer">
-				<p class="main-text">
-					5
-				</p>
-				<p class="sub-text">
-					Ferrois' Job Experiences <br>
-					Click here to find out more
-				</p>
-			</div>
-		</div>
-		<div class="content-wrapper-six">
-			<img src="jobs.jpg" alt="" class="main-image">
-			<div class="darken-layer">
-				<p class="main-text">
-					6
-				</p>
-				<p class="sub-text">
-					Ferrois' Job Experiences <br>
-					Click here to find out more
-				</p>
-			</div>
-		</div>
-		<div class="footing">
-			<p class="footing-text">
-				This website was created by Ferrois on <br>
-				17th December 2021 using HTML/CSS/JS
-			</p>
-		</div>
-	</div>	
+	</div>
 </body>
-	<script src="javascript.js"></script>
 </html>
