@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<!--BlockAttax1.0 In 1 HTML File-->
+<html>
+	<style>
+	html{
+	overflow-x:hidden;
+	overflow-y:hidden;
+	
+	}
+	
+	.container{
+	margin:0px;
+	}
+	
+	.canvas{
+	border:0px black solid;
+	margin:-8px;
+	position:absolute;
+	z-index:-50;
+	}
+	
+	.menu{
+	top:84vh;
+	left:0;
+	position:absolute;
+	height:20vh;
+	width:100vw;
+	background-color:#91660a;
+	z-index:50;
+	border-top:2px solid gray;
+	}
+	
+	/*notification bar*/
+	.notifications.isHidden{
+	position:absolute;
+	background-color:rgba(40,40,40,0.5);
+	height:30px;
+	width:300px;
+	text-align:center;
+	color:black;
+	font-size:1.4em;
+	border:1px gray solid;
+	border-radius:5px;
+	left:-300px;
+	transition:1s;
+	}
+	
+	.isActive.notifications{
+	position:absolute;
+	background-color:rgba(40,40,40,0.5);
+	height:30px;
+	width:300px;
+	text-align:center;
+	color:black;
+	font-size:1.4em;
+	border:1px gray solid;
+	border-radius:5px;
+	transition:1s;
+	left:-300px;
+	transform:translateX(300px);
+	}
+	
+	/*money stuff*/
+	
+	.money_wrapper{
+	position:absolute;
+	background-color:gray;
+	height:50px;
+	width:100px;
+	top:10%;
+	left:20px;
+	border:2px solid black;
+	border-radius:5px;
+	}
+	
+	.money_logo{
+	position:absolute;
+	top:10%;
+	font-size:2em;
+	left:5%;
+	color:green;
+	text-shadow:0 0 2px black;
+	}
+	
+	.money_value{
+	position:absolute;
+	top:20%;
+	font-size:1.5em;
+	left:25%;
+	color:black;
+	}
+	
+	.bullet_wrapper{
+	position:absolute;
+	bottom:-26px;
+	height:21px;
+	width:80px;
+	background-color:gray;
+	border:2px solid black;
+	border-radius:5px;
+	}
+	
+	.bullet_logo{
+	font-size:1.3em;
+	left:9px;
+	position:absolute;
+	top:-2px
+	}
+	
+	.bullet_value{
+	position:absolute;
+	color:#63000;
+	left:40px;
+	font-size:1.3em;
+	top:-2px;
+	color:#640000;
+	}
+	
+	/*info button*/
+	
+	.info_button{
+	text-align:center;
+	position:relative;
+	background-color:gray;
+	right:-190px;
+	top:10px;
+	height:10vh;
+	width:10vh;
+	border-radius:5px;
+	border: 2px black solid;
+	z-index:-2;
+	}
+	
+	
+	/* upgrades */
+	
+	.upgrade_button{
+	position:relative;
+	background-color:gray;
+	right:-275px;
+	top:-10vh;
+	height:11vh;
+	width:11vh;
+	border-radius:5px;
+	border : 2px black solid;
+	}
+	
+	.upgrade_panel.upg_isHidden{
+	position:fixed;
+	bottom: 6px;
+	height:85px;
+	width:220px;
+	right:-250px;
+	border:2px orange solid;
+	border-radius:5px;
+	background-color:rgba(0,0,0,0.5);
+	z-index:-1;
+	transition:1s;
+	}
+	
+	.upgrade_panel.upg_isActive{
+	position:fixed;
+	bottom: 6px;
+	height:85px;
+	width:220px;
+	right:-250px;
+	border:2px orange solid;
+	border-radius:5px;
+	background-color:rgba(0,0,0,0.5);
+	z-index:-1;
+	transform:translateX(-250px);
+	transition:1s;
+	}
+	
+	.speed_upgrade{
+	position:absolute;
+	height:23px;
+	width:110px;
+	background-color:lightblue;
+	margin:2px;
+	border:1px black solid;
+	border-radius:5px;
+	text-align:center;
+	}
+	
+	.speed_level{
+	position:absolute;
+	height:23px;
+	width:23px;
+	background-color:black;
+	margin:2px;
+	border:1px black solid;
+	border-radius:5px;
+	text-align:center;
+	right:76px;
+	top:0px;
+	color:white;
+	}
+	
+	
+	.damage_upgrade{
+	position:absolute;
+	top:27px;
+	height:23px;
+	width:110px;
+	background-color:maroon;
+	margin:2px;
+	border:1px black solid;
+	border-radius:5px;
+	text-align:center;
+	}
+	
+	.damage_level{
+	position:absolute;
+	height:23px;
+	width:23px;
+	background-color:black;
+	margin:2px;
+	border:1px black solid;
+	border-radius:5px;
+	text-align:center;
+	right:76px;
+	top:27px;
+	color:white;
+	}
+	
+	.size_upgrade{
+	position:absolute;
+	top:54px;
+	height:23px;
+	width:110px;
+	background-color:green;
+	margin:2px;
+	border:1px black solid;
+	border-radius:5px;
+	text-align:center;
+	}
+	
+	.size_level{
+	position:absolute;
+	height:23px;
+	width:23px;
+	background-color:black;
+	margin:2px;
+	border:1px black solid;
+	border-radius:5px;
+	text-align:center;
+	right:76px;
+	top:54px;
+	color:white;
+	}
+	
+	.information.info_active{
+	position:relative;
+	height:100vh;
+	width:100vw;
+	margin:-8px;
+	background-color:rgba(0,0,0,0.8);
+	z-index:1000;
+	color:white;
+	transition:1s;
+	}
+	
+	.information.info_inactive{
+	position:relative;
+	height:100vh;
+	width:100vw;
+	margin:-8px;
+	background-color:rgba(0,0,0,0.8);
+	z-index:1000;
+	color:white;
+	transform:translateY(-100vh);
+	transition:1s;
+	}
+	
+	
+	
+	.main_greeting{
+	top:5px;
+	position:absolute;
+	text-decoration:underline;
+	margin:30px;
+	}
+	
+	.information > p{
+	position:absolute;
+	top:60px;
+	margin:10px;
+	}
+	</style>
+<head>
+<title>Nazi simulator</title>
+</head>
+<body>
+	<div class="container">
+		<canvas class="canvas">
+		</canvas>
+		<div class="notifications isHidden">
+			notif text ferrois ferrois ferrois
+		</div>
+		<div class="menu">
+			<div class="money_wrapper">
+				<div class="money_logo">
+					$
+				</div>
+				<div class="money_value">
+					0
+				</div>
+				<div class="bullet_wrapper">
+					<div class="bullet_logo">
+						> $
+					</div>
+					<div class="bullet_value">
+						1
+					</div>
+				</div>
+			</div>
+			<div class="info_button" onclick="openInfo()">
+			INFO
+			</div>
+			<div class="upgrade_button upg_isHidden" onclick="buttonToggler()" align="center">
+			 Level<br/>
+			 Up<br/>
+			 Shop
+			</div>
+			<div class="upgrade_panel">
+				<div class="speed_upgrade" onclick="buySpeed()">
+				</div>
+					<div class="speed_level">
+						1
+					</div>
+				<div class="damage_upgrade" onclick="buyDamage()">
+				</div>
+					<div class="damage_level">
+						1
+					</div>
+				<div class="size_upgrade" onclick="buySize()">
+				</div>
+					<div class="size_level">
+						1
+					</div>
+			</div>
+		</div>
+	</div>
+	<div class="information info_active" onclick="startGame()">
+		<h3 class="main_greeting"> Welcome To Block Attax V1.0 </h3>
+		<p> This version was completed by Ferrois on 26th December 2021 (pls dont plagarise my work)<br/> <br/>
+			In the game, you have to shoot the shapes inorder to collect currency to purchase upgrades. <br/><br/>
+			Both enemy hardness and bullet damage determine the success rate of a shot<br/><br/>
+			Enemies - <br/>Green (hardness : 1, speed : slow, reward : 5)<br/>
+			Yellow (hardness : 1, speed : very fast, reward : 30)<br/>
+			Orange (hardness : 2, speed : medium, reward : 10)<br/>
+			Red (hardness : 3, speed : medium, reward : 30)*unkillable at low dmg <br/>
+			Gray (hardness : 4, speed : slow-medium , reward : 60) *unkillable at low dmg<br/>
+			BOSS FIGHT (W.I.P) Stay tuned!<br/><br/>
+			Press anywhere to start!
+			
+		</p>
+	</div>
+</body>
+<script>
+	//Block Attax V1.0 by Ferrois
+	//Please enjoy the game
+	var canvas = document.querySelector(".canvas");
+	var ctx = canvas.getContext("2d");
+	var currency = 50; //starting money
+	var currency_elem = document.querySelector(".money_value");
+	var notifications_bar = document.querySelector(".notifications");
+	var bullet_elem = document.querySelector(".bullet_value");
+	var bullet_value = 2; //bullet price
+	var upgrade_button = document.querySelector(".upgrade_button");
+	var upgrade_panel = document.querySelector(".upgrade_panel");
+	var speed_upgrade = document.querySelector(".speed_upgrade");
+	var damage_upgrade = document.querySelector(".damage_upgrade");
+	var size_upgrade = document.querySelector(".size_upgrade");
+	var speed_level_display = document.querySelector(".speed_level");
+	var damage_level_display = document.querySelector(".damage_level");
+	var size_level_display = document.querySelector(".size_level");
+	var information_greeting = document.querySelector(".information")
+	//upgrade button stuff
+	
+	var upg_isActive = true
+	function buttonToggler(){
+	if (upg_isActive == false){
+	upg_isActive = true;
+	upgrade_panel.classList.remove("upg_isHidden");
+	upgrade_panel.classList.add("upg_isActive");
+	}
+	else{
+	upg_isActive = false;
+	upgrade_panel.classList.remove("upg_isActive");
+	upgrade_panel.classList.add("upg_isHidden");
+	}
+	}
+	buttonToggler()
+	
+	var speed_price = 100;
+	var damage_price = 100;
+	var size_price = 100;
+	
+	
+	// dmg > 0,1,2,3,SP
+	//helth > 0,1,2,3,4
+	//speed > 0,1,2,3,4,5
+	
+	//enemy pickers
+	// green|yellow|orange|red|gray
+	const enemyRelativeProbabilities = [3,1,2,1,1]
+	
+	function arraySum(array){
+	let array_sum = 0;
+	for (let i = 0; i < array.length;i++){
+	array_sum += array[i]
+	}	
+	return array_sum;
+	}
+	function enemyChooser(){
+	let array_sum = arraySum(enemyRelativeProbabilities);
+	let randomSelector = (Math.floor(Math.random() * array_sum) + 1);
+	for (let i = 0;i < enemyRelativeProbabilities.length;i++){
+	randomSelector -= enemyRelativeProbabilities[i];
+	if (randomSelector <= 0){
+	return i;
+	}
+	}
+	}
+	
+	//damage output in probability
+	
+	const probabilityOutputter = [ 
+	[50,60,70,90,95],
+	[30,40,50,60,75],
+	[10,20,30,40,50],
+	[0,10,20,30,40],
+	[0,0,10,15,20] ]
+	
+	function getProbability(damage,hardness){
+	let probability_temp = probabilityOutputter[hardness-1][damage-1];
+	if ((Math.random() * 100) < probability_temp){
+	return true;
+	}
+	else{
+	return false;
+	}
+	}
+	
+	//console.log(getProbability(2,1))
+	//upgrade variables
+	var bullet_size = 1 ;
+	var bullet_speed = 1 ;
+	var bullet_damage = 1 ;
+	
+	
+	canvas.width = innerWidth;
+	canvas.height = innerHeight;
+	
+	function notif_bar(message){
+	notifications_bar.classList.remove("isHidden");
+	notifications_bar.classList.add("isActive");
+	notifications_bar.innerHTML = message;
+	setTimeout(()=>{
+	notifications_bar.classList.remove("isActive");
+	notifications_bar.classList.add("isHidden");
+	},4000)
+	}
+	
+	function random_x_value(){
+	if (Math.random(0,1) > 0.5){
+	return 0;
+	}
+	else{
+	return canvas.width;
+	}
+	}
+	
+	class Player{
+	constructor(x,y,radius,color){
+	this.x = x;
+	this.y = y;
+	this.radius = radius;
+	this.color = color;
+	
+	}
+	
+	draw(){
+	ctx.beginPath();
+	ctx.arc(this.x,this.y,this.radius,0,Math.PI * 2,false);
+	ctx.fillStyle = this.color;
+	ctx.fill();
+	}
+	}
+	
+	class Projectile{
+	constructor(x,y,radius,color,velocity_x,velocity_y,damage){
+	this.x = x;
+	this.y = y;
+	this.radius= radius + 4;
+	this.color = color;
+	this.velocity_x = velocity_x;
+	this.velocity_y = velocity_y;
+	this.damage = damage;
+	}
+	draw(){
+	ctx.beginPath();
+	ctx.arc(this.x,this.y,this.radius,0,2 * Math.PI,false);
+	ctx.fillStyle = this.color;
+	ctx.fill();
+	}
+	update(){
+	this.x = this.x + this.velocity_x;
+	this.y = this.y + this.velocity_y;
+	this.draw();
+	// remove projectiles outside of screen
+	if (this.x < -15 || this.x > (canvas.width + 15) || this.y < -15 || this.y > (canvas.height + 15)){
+	const index_projectile = projectiles.indexOf(this);
+	projectiles.splice(index_projectile,1);
+	}
+	else{
+	return
+	}
+	}
+	}
+	
+	class Enemy{
+	constructor(x,y,radius,color,velocity_x,velocity_y,hardness,speed,reward){
+	this.x = x;
+	this.y = y;
+	this.radius = radius;
+	this.color = color;
+	if (this.x==0){
+	this.velocity_x = 1 * velocity_x * speed;
+	}
+	else{
+	this.velocity_x = -1 * velocity_x * speed;
+	}
+	this.velocity_y = velocity_y;
+	this.hardness = hardness;
+	this.reward = reward;
+	}
+	draw(){
+	ctx.beginPath();
+	ctx.arc(this.x,this.y,this.radius,0,2 * Math.PI,false);
+	ctx.fillStyle = this.color;
+	ctx.fill();
+	}
+	update(){
+	this.x += this.velocity_x;
+	this.y += this.velocity_y;
+	this.draw();
+	//remove enemies outside of screen
+	if (this.x < -15 || this.x > (canvas.width + 15) || this.y < -15 || this.y > (canvas.height + 15)){
+	const index_enemy = enemies.indexOf(this);
+	enemies.splice(index_enemy,1);
+	}
+	else{
+	return
+	}
+	}
+	
+	//successful hit
+	
+	hit(enemy_index,count,blood_volume,enemy,projectile){
+	for(let i = 0;i < blood_volume;i++){
+	bloods.push(new Blood(this.x,this.y,5,5,"maroon",(Math.random() - 0.5) * 4,(Math.random() -0.5) * 4));
+	bloods.forEach((blood,blood_index)=>{blood.draw(5);
+	setTimeout(()=> bloods.splice(blood_index,1),200);
+	})
+	}
+	if (getProbability(projectile.damage,enemy.hardness)){
+	enemies.splice(enemy_index,1);
+	currency += this.reward;
+	}else{
+	}		
+	}
+	}
+	
+	class Blood{
+	constructor(x,y,width,height,color,velocity_x,velocity_y){
+	this.x = x;
+	this.y = y;
+	this.width = width;
+	this.height = height;
+	this.color = color;
+	this.velocity_x = velocity_x;
+	this.velocity_y = velocity_y;
+	}
+	draw(volume){
+	ctx.beginPath();
+	ctx.rect(this.x,this.y,this.width,this.height);
+	ctx.fillStyle = this.color;
+	ctx.fill();
+	}
+	update(){
+	this.x += this.velocity_x;
+	this.y += this.velocity_y;
+	this.draw(5);
+	}
+	}
+	
+	const x = canvas.width / 2;
+	const y = canvas.height / 1.2;
+	
+	const player = new Player(x,y,20,'red');
+	
+	
+	const projectiles = [];
+	const enemies = [];
+	const bloods = [];
+	
+	addEventListener("click",() => {
+	if (currency >= bullet_value){
+	if (event.clientY < (canvas.height / 1.2)){
+	const angle = Math.atan2(
+	event.clientY - canvas.height/1.2,
+	event.clientX - canvas.width/2);
+	
+	projectiles.push(new Projectile(canvas.width / 2, 
+	canvas.height/1.2,
+	bullet_size,
+	'#e1e144',
+	(bullet_speed + 2) * Math.cos(angle),
+	(bullet_speed + 2) * Math.sin(angle),
+	bullet_damage//bullet dmg
+	));
+	currency -= bullet_value;
+	}
+	else{
+	return;
+	}
+	}else{
+	notif_bar("Not enough $$$");
+	}
+	
+	})
+	
+	function gameTicker(){
+	requestAnimationFrame(gameTicker);
+	
+	//refresh page
+	
+	ctx.beginPath();
+	ctx.rect(0,0,canvas.width,canvas.height);
+	ctx.fillStyle = 'rgba(240,240,240,0.9)';
+	ctx.fill();
+	
+	//update player
+	
+	player.draw();
+	
+	//update projectile
+	
+	projectiles.forEach((projectile) => {
+	projectile.update();
+	})
+	enemies.forEach((enemy,index)=> {
+	enemy.update();
+	
+	//collision mechanism
+	
+	projectiles.forEach((projectile,i) => {
+	const distance = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
+	
+	if ((distance - enemy.radius - projectile.radius) < 0){
+	
+	projectiles.splice(i,1);
+	enemy.hit(index,1,8,enemy,projectile);				
+	}
+	})
+	})
+	bloods.forEach((blood)=>{
+	blood.update();
+	})
+	
+	//update values
+	
+	currency_elem.innerHTML = currency;
+	bullet_elem.innerHTML = bullet_value;
+	speed_upgrade.innerHTML = "Speed $" + speed_price;
+	damage_upgrade.innerHTML = "Dmg $" + damage_price;
+	size_upgrade.innerHTML = "Size $" + size_price; 
+	speed_level_display.innerHTML = bullet_speed;
+	damage_level_display.innerHTML = bullet_damage;
+	size_level_display.innerHTML = bullet_size;
+	}
+	
+	//enemy spawning
+	setInterval(() => {
+	switch(enemyChooser()){
+	case 0:
+	enemies.push(new Enemy(random_x_value(),(Math.random() * canvas.height) - 160,15,"green",0.5,(Math.random()-0.5),1,1,5));
+	break;
+	case 1:
+	enemies.push(new Enemy(random_x_value(),(Math.random() * canvas.height) - 160,12,"yellow",0.5,(Math.random()-0.5),1,3,30));
+	break;
+	case 2:
+	enemies.push(new Enemy(random_x_value(),(Math.random() * canvas.height) - 160,18,"orange",0.5,(Math.random()-0.5),2,1.5,10));
+	break;
+	case 3:
+	enemies.push(new Enemy(random_x_value(),(Math.random() * canvas.height) - 160,18,"red",0.5,(Math.random()-0.5),3,1.5,30));
+	break;
+	case 4:
+	enemies.push(new Enemy(random_x_value(),(Math.random() * canvas.height) - 160,20,"gray",0.5,(Math.random()-0.5),4,1.1,60));
+	break;
+	}
+	
+	//	enemies.push(new Enemy(random_x_value(),(Math.random() * canvas.height) - 160,15,"orange",0.5,(Math.random()-0.5),1))
+	},300)
+	
+	//purchases
+	
+	function buySpeed(){
+	if (bullet_speed < 5){
+	if (currency >= speed_price){
+	bullet_speed += 1;
+	currency -= speed_price;
+	speed_price += 200
+	notif_bar("Purchased!");
+	if (bullet_speed == 5){
+	speed_price = "Max";
+	}
+	}
+	else{
+	notif_bar("Your too poor to afford lol")
+	}
+	}
+	else{
+	notif_bar("Maximum level of speed!!")
+	}
+	}
+	
+	function buyDamage(){
+	if (bullet_damage < 5){
+	if (currency >= damage_price){
+	bullet_damage += 1;
+	currency -= damage_price;
+	damage_price += 200
+	notif_bar("Purchased!");
+	if (bullet_damage == 5){
+	damage_price = "Max";
+	}
+	}
+	else{
+	notif_bar("Your too poor to afford lol")
+	}
+	}
+	else{
+	notif_bar("Maximum level of dmg!!")
+	}
+	}
+	
+	function buySize(){
+	if (bullet_size < 5){
+	if (currency >= size_price){
+	bullet_size += 1;
+	currency -= size_price;
+	size_price += 200
+	notif_bar("Purchased!");
+	if (bullet_size == 5){
+	size_price = "Max";
+	}
+	}
+	else{
+	notif_bar("Your too poor to afford lol")
+	}
+	}
+	else{
+	notif_bar("Maximum level of size!!")
+	}
+	}
+	
+	//system
+	
+	setInterval(() =>{
+	notif_bar("+$10 For Playing 🙂")
+	currency += 10
+	},60000)
+	
+	// greetings
+	notif_bar("Block Attax by Ferrois 😎")
+	
+	alert("This game was made using HTML/CSS/JS by Ferrois. Its the first game ive ever made. Please Enjoy!")
+	
+	var gameStarted = false;
+	function startGame(){
+	if (gameStarted == false){
+	gameStarted = true;
+	gameTicker();
+	information_greeting.classList.remove("info_active");
+	information_greeting.classList.add("info_inactive");
+	}
+	else{
+	information_greeting.classList.remove("info_active");
+	information_greeting.classList.add("info_inactive");
+	}
+	}
+	
+	function openInfo(){
+	information_greeting.classList.add("info_active");
+	information_greeting.classList.remove("info_inactive");
+	}
+	
+	// end of code
+</script>
+</html>
